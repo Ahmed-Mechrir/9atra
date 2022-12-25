@@ -1,0 +1,166 @@
+{% comment %}  ____                 _       _____                          _     _                      {% endcomment %}
+{% comment %} |  _ \               | |     |  __ \                        | |   (_)                     {% endcomment %}
+{% comment %} | |_) |   ___   ___  | |_    | |__) |  _ __    __ _    ___  | |_   _    ___    ___   ___  {% endcomment %}
+{% comment %} |  _ <   / _ \ / __| | __|   |  ___/  | '__|  / _` |  / __| | __| | |  / __|  / _ \ / __| {% endcomment %}
+{% comment %} | |_) | |  __/ \__ \ | |_    | |      | |    | (_| | | (__  | |_  | | | (__  |  __/ \__ \ {% endcomment %}
+{% comment %} |____/   \___| |___/  \__|   |_|      |_|     \__,_|  \___|  \__| |_|  \___|  \___| |___/ {% endcomment %}
+
+
+
+=> Classes, enums, typedefs, and extensions name should in UpperCamelCase.
+=> Libraries, packages, directories, and source files name should be in snake_case(lowercase_with_underscores).
+=> Variables, constants, parameters, and named parameters should be in lowerCamelCase.
+=> Avoid print() calls and use debugPrint(), it allows you to include a bit more granularity and information in the logging output.
+=> Avoid using leading underscore for local identifiers that aren't private.
+=> Split widgets into sub Widgets.
+=> Use ListView.builder for a long list.
+=> Use Const in Widgets.
+=> Use if condition instead of conditional expression.
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Use relative imports for files in lib:
+- Don't
+import 'package:demo/src/utils/dialog_utils.dart';
+- Do
+import '../../../utils/dialog_utils.dart';
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Specify types for class member:
+- Don't
+var item = 10;
+final car = Car();
+const timeOut = 2000;
+- Do
+int item = 10;
+final Car bar = Car();
+String name = 'john';
+const int timeOut = 20;
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Avoid using as instead, use is operator:
+- Don't
+(item as Animal).name = 'Lion';
+- Do
+if (item is Animal)
+    item.name = 'Lion';
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Use ?? and ?. operators:
+- Don't
+v = a == null ? b : a;
+- Do
+v = a ?? b;
+
+- Don't
+v = a == null ? null : a.b;
+- Do
+v = a?.b;
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Use spread collections:
+- Don't
+var y = [4,5,6];
+var x = [1,2];
+x.addAll(y);
+- Do
+var y = [4,5,6];
+var x = [1,2,...y];
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Use Cascades Operator:
+- Don't
+var path = Path();
+path.lineTo(0, size.height);
+path.lineTo(size.width, size.height);
+path.lineTo(size.width, 0);
+path.close();
+- Do
+var path = Path()
+..lineTo(0, size.height)
+..lineTo(size.width, size.height)
+..lineTo(size.width, 0)
+..close();
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Use raw string:
+- Don't
+var s = 'This is demo string \\ and \$';
+- Do
+var s = r'This is demo string \ and $';
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Don't explicitly initialize variables null:
+- Don't
+int _item = null;
+- Do
+int _item;
+
+{% comment %} ============================================================= {% endcomment %}
+
+Use expression function bodies:
+- Don't
+get width {
+    return right - left;
+}
+Widget getProgressBar() {
+    return CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+    );
+}
+- Do
+get width => right - left;
+Widget getProgressBar() => CircularProgressIndicator(
+    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+);
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Use interpolation to compose strings:
+- Don't
+var description = 'Hello, ' + name + '! You are ' + (year - birth).toString() + ' years old.';
+- Do
+var description = 'Hello, $name! You are ${year - birth} years old.';
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Don't create a lambda when a tear-off will do:
+List<String> names=[]
+- Don't
+names.forEach((name) {
+    print(name);
+});
+- Do
+names.forEach(print);
+
+{% comment %} ============================================================= {% endcomment %}
+
+=> Use async/await overusing futures callback:
+- Don't
+Future<int> countActiveUser() {
+    return getActiveUser().then((users) {
+        return users?.length ?? 0;
+    }).catchError((e) {
+        log.error(e);
+        return 0;
+    });
+}
+- Do
+Future<int> countActiveUser() async {
+try {
+    var users = await getActiveUser();
+    return users?.length ?? 0;
+    } catch (e) {
+        log.error(e);
+        return 0;
+    }
+}
+
+{% comment %} ============================================================= {% endcomment %}
